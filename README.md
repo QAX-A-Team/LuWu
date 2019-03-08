@@ -18,7 +18,7 @@ cobaltstrike一键部署脚本，快捷自动化部署cs，红队基础架构部
  * 生成c2profile文件
  * 启动TeamServer
 ```
- 建议使用ubuntu系统
+ 仅支持ubuntu系统
  ubuntu 18.10（vultr）测试成功
 ```
 ----
