@@ -12,6 +12,12 @@
 **陆吾**即**肩吾**，中国古代神话传说中的昆仑山神明，人面虎身虎爪而九尾。
 
 ----
+## 架构设计
+![](https://ws3.sinaimg.cn/large/006tKfTcly1g0yukcashpj317e0sewjv.jpg)
+
+----
+
+## 组件
 ### CSInstall.sh 
 cobaltstrike一键部署脚本，快捷自动化部署cs，红队基础架构部署组件之一。
  * Oracle Java 安装
