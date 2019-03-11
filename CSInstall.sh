@@ -13,6 +13,10 @@ cat << EOF
 |  [*] CS 一键部署脚本 360A-team@L.N. [*]  |
 *------------------------------------------*
 EOF
+if [[ $EUID -ne 0 ]]; then
+	echo "Please run this script as root" 1>&2
+	exit 1
+fi
 read -p "[-] 请设置cs下载压缩包url: " csUrl
 version="3.13"
 
@@ -22,15 +26,15 @@ mkdir cobaltstrike_$version
 echo "[-] JAVA环境安装"
 echo "deb http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee /etc/apt/sources.list.d/webupd8team-java.list >/dev/null
 echo "deb-src http://ppa.launchpad.net/webupd8team/java/ubuntu xenial main" | tee -a /etc/apt/sources.list.d/webupd8team-java.list >/dev/null
-sudo apt-key adv -v --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 >/dev/null 2>&1
-sudo apt-get update >/dev/null
+apt-key adv -v --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EEA14886 >/dev/null 2>&1
+apt-get update >/dev/null
 echo " |-> sudo apt-get install -y oracle-java8-installer"
-sudo apt-get install -y oracle-java8-installer
+apt-get install -y oracle-java8-installer
 echo " |-> apt-get install -y oracle-java8-set-default"
-sudo apt-get install -y oracle-java8-set-default >/dev/null
+apt-get install -y oracle-java8-set-default >/dev/null
 
 echo "[-] 下载cs压缩包"
-sudo apt-get install -y unzip >/dev/null
+apt-get install -y unzip >/dev/null
 cd cobaltstrike_$version
 echo " |-> wget $csUrl"
 wget $csUrl >/dev/null 2>&1
@@ -40,8 +44,8 @@ read -p " |-> 请输入解压密码:" zippassword
 unzip -P $zippassword cs3.13.zip >/dev/null
 
 echo "[-] 下载C2profile生成器"
-sudo apt-get install -y git >/dev/null
-sudo apt-get install -y python >/dev/null
+apt-get install -y git >/dev/null
+apt-get install -y python >/dev/null
 echo " |-> git clone https://github.com/Tycx2ry/Malleable-C2-Randomizer.git"
 git clone https://github.com/Tycx2ry/Malleable-C2-Randomizer.git >/dev/null 2>&1
 cd Malleable-C2-Randomizer
@@ -52,7 +56,7 @@ mv onedrive__360ateam.profile ../cobaltstrike3.13/onedrive__360ateam.profile
 cd ../cobaltstrike3.13/
 
 echo "[-] 启动teamserver"
-sudo apt-get install -y screen >/dev/null
+apt-get install -y screen >/dev/null
 echo " |-> 获取本机IP地址"
 ipaddr=$(ip addr | awk '/^[0-9]+: / {}; /inet.*global/ {print gensub(/(.*)\/(.*)/, "\\1", "g", $2)}')
 echo " |-> IP: "$ipaddr" 请检测IP地址是否正确并填写"
