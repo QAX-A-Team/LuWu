@@ -13,8 +13,19 @@
 
 ----
 ## 架构设计
+### 架构图
 ![](https://ws3.sinaimg.cn/large/006tKfTcly1g0yukcashpj317e0sewjv.jpg)
-
+### 技术选型
+ * VPS
+    - CS部署：Vultr
+    - SMTP部署：DigitalOcean
+    - FileServer部署 QingCloud（当然你也可以使用Vultr、DigitalOcean等等）
+    - 其他前置部署：Vultr
+ * 开发语言
+    - Bash
+    - Python
+ * 域名服务
+    - namesilo
 ----
 
 ## 组件
@@ -27,4 +38,22 @@ cobaltstrike一键部署脚本，快捷自动化部署cs，红队基础架构部
  仅支持ubuntu系统
  ubuntu 18.10（vultr）测试成功
 ```
+### VPSDeploy.sh
+一键部署DigitalOcean、Vultr服务器
+ * 增加ssh钥
+ * 创建vps
+ 
+### MailSetup.sh
+一键安装SMTP服务，使用了经过修改的mail-in-a-box项目
+ 
 ----
+
+## 使用
+### 准备工作
+ 1. 注册Vultr、DigitalOcean、namesilo并获取API key。
+ 2. 在namesilo上已经注册好域名（例如：360ateam.com）
+ 3. 准备好CS文件压缩包（例如：cs3.13.zip）
+### CSInstall.sh使用
+等待更新
+## 引用的开源项目
+ * https://github.com/mail-in-a-box/mailinabox
