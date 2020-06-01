@@ -37,25 +37,6 @@
                     </v-list-item>
                 </template>
             </v-list>
-            <!-- <v-list subheader v-show="hasAdminAccess">
-                <v-subheader>Admin</v-subheader>
-                <v-list-item to="/main/admin/users/all">
-                    <v-list-item-action>
-                        <v-icon>group</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>用户管理</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-                <v-list-item to="/main/admin/users/create">
-                    <v-list-item-action>
-                        <v-icon>person_add</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Create User</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-            </v-list> -->
         </v-navigation-drawer>
         <v-app-bar clipped-left app dark color="primary">
             <v-toolbar-title v-text="appName"></v-toolbar-title>
