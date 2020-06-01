@@ -1,0 +1,53 @@
+# local env files
+**/.env.local
+**/.env.*.local
+
+# Log files
+**/npm-debug.log*
+**/yarn-debug.log*
+**/yarn-error.log*
+
+# Editor directories and files
+**/.idea
+**/.vscode
+**/*.suo
+**/*.ntvs*
+**/*.njsproj
+**/*.sln
+**/*.sw*
+
+
+# Byte-compiled / optimized / DLL files
+**/__pycache__/
+**/*.py[cod]
+**/*$py.class
+
+
+# Installer logs
+**/pip-log.txt
+**/pip-delete-this-directory.txt
+
+
+# Django stuff:
+**/*.log
+**/local_settings.py
+**/db.sqlite3
+**/db.sqlite3-journal
+
+# PEP 582; used by e.g. github.com/David-OConnor/pyflow
+**/__pypackages__/
+
+# Celery stuff
+**/celerybeat-schedule
+**/celerybeat.pid
+
+# project 
+**/data
+**/migrations
+**/alembic
+**/.terraform
+**/.git
+**/.DS_Store
+**/node_modules/
+deploy.py
+**/*.tar.gz
