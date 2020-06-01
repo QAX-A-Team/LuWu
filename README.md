@@ -99,7 +99,7 @@ conf
     └── terraform.rc
 ```
 
-请注意**conf/backend**的**env.default**是实例文件，使用的时候请放在src/backend目录下， 比如：
+请注意**conf/backend**的**env.default**是示例文件，使用的时候请放在src/backend目录下， 比如：
 ```bash
 cp conf/backend/env.default src/backend/.env
 vi src/backend/.env
@@ -123,7 +123,7 @@ PYTHONPATH=. python app/initial_data.py
 
 使用系统时请先在**配置管理**页面完成ISP、SSH等相关配置
 
-- 域名ISP， 目前只支持**namesilo**
+- 域名ISP， 目前只支持**NameSilo**
 - VPS ISP， 目前支持**Vultr**和**DigitalOcean**
 - C2 Profile， 即CS的 profile
 - SSH KEY， 这里的SSH KEY会被写入到被创建的VPS，所以也可以通过页面提供的私钥直接连接目标VPS
