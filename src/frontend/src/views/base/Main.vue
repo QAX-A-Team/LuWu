@@ -68,10 +68,6 @@
                     </v-btn>
                 </template>
                 <v-list>
-                    <v-list-item @click="() => {}">
-                        <v-icon>portrait</v-icon>
-                        用户资料
-                    </v-list-item>
                     <v-list-item @click="logout">
                         <v-icon>exit_to_app</v-icon>
                         注销
