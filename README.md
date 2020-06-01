@@ -105,6 +105,20 @@ cp conf/backend/env.default src/backend/.env
 vi src/backend/.env
 ```
 
+### 初始化系统
+
+请参考[alembic官方文档](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
+```bash
+# 初始化
+alembic init && alembic revision -m 'init'
+
+# 生成目前的model记录 && 升级到最新记录
+alembic revision --autogenerate && alembic upgrade head
+
+# 写入用户数据(在src/backend目录下运行)
+PYTHONPATH=. python app/initial_data.py 
+```
+
 ### 使用配置
 
 使用系统时请先在**配置管理**页面完成ISP、SSH等相关配置
