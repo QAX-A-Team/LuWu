@@ -99,11 +99,19 @@ conf
     └── terraform.rc
 ```
 
+#### 环境变量配置
 请注意**conf/backend**的**env.default**是示例文件，使用的时候请放在src/backend目录下， 比如：
 ```bash
 cp conf/backend/env.default src/backend/.env
-vi src/backend/.env
 ```
+根据具体情况，可能需要对配置`src/backend/.env`进行更改
+
+同理，完成对前端项目的环境配置
+```bash
+cp conf/frontend/env.default  src/frontend/.env
+```
+
+
 
 ### 初始化系统
 
