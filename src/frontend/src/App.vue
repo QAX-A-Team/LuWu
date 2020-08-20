@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <v-app>
-            <v-content v-if="loggedIn===null">
+            <v-main v-if="loggedIn===null">
                 <v-container fill-height>
                     <v-layout align-center justify-center>
                         <v-flex>
@@ -12,7 +12,7 @@
                         </v-flex>
                     </v-layout>
                 </v-container>
-            </v-content>
+            </v-main>
             <router-view v-else />
             <NotificationsManager></NotificationsManager>
         </v-app>

@@ -3,7 +3,6 @@ import axios, { AxiosRequestConfig } from 'axios';
 import store from '@/store';
 import router from '@/router';
 
-import { apiUrl } from '@/env';
 import { commitAddNotification } from '@/store/main/mutations';
 import {
     IC2ProfileCreate,
@@ -44,7 +43,7 @@ import { IToken } from './interfaces/user';
 
 
 const instance = axios.create({
-    baseURL: `${apiUrl}/api/v1/`,
+    baseURL: '/api/v1/',
     timeout: 300000,
     headers: { 'Content-Type': 'application/json' },
 });
@@ -95,22 +94,22 @@ instance.interceptors.response.use(
 export const api = {
     async logInGetToken(username: string, password: string): Promise<IToken> {
         const data = { username, password };
-        return instance.post(`${apiUrl}/api/v1/login/access-token`, data);
+        return instance.post('login/access-token', data);
     },
     async getMe(): Promise<IUserProfile> {
-        return instance.get(`${apiUrl}/api/v1/users/me`);
+        return instance.get('users/me');
     },
     async updateMe(token: string, data: IUserProfileUpdate): Promise<IUserProfile> {
-        return instance.put(`${apiUrl}/api/v1/users/me`, data);
+        return instance.put('users/me', data);
     },
     async getUsers(token: string): Promise<IUserProfile[]> {
-        return instance.get(`${apiUrl}/api/v1/users/`);
+        return instance.get('users');
     },
     async updateUser(token: string, userId: number, data: IUserProfileUpdate): Promise<IUserProfile> {
-        return instance.put(`${apiUrl}/api/v1/users/${userId}`, data);
+        return instance.put(`users/${userId}`, data);
     },
     async createUser(token: string, data: IUserProfileCreate): Promise<IUserProfile> {
-        return instance.post(`${apiUrl}/api/v1/users/`, data);
+        return instance.post('users/', data);
     },
 
     // config api
@@ -288,7 +287,7 @@ export const api = {
     async deleteRedirector(redirectorId: number) {
         return instance.delete(`modules/redirectors/${redirectorId}`);
     },
-    async getRedirectorBeaconTypeSelections(): Promise<IEnumItem[]>  {
+    async getRedirectorBeaconTypeSelections(): Promise<IEnumItem[]> {
         return instance.get('modules/beacon_types');
     },
 };

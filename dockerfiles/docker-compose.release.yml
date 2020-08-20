@@ -1,0 +1,73 @@
+version: "3.4"
+services:
+  redis:
+    restart: always
+    volumes:
+      - ../conf/redis/redis.conf:/opt/redis.conf:ro
+      - ../data/redis-data:/data
+    command:
+      - /opt/redis.conf
+    image: redis:5.0.7-buster
+    container_name: luwu_redis
+    ports:
+      - 127.0.0.1:13001:6379
+
+  pgsql:
+    restart: always
+    volumes:
+      - ../conf/postgresql/postgresql.conf:/etc/postgresql/postgresql.conf
+      - ../data/pg-data:/var/lib/postgresql/data
+    image: postgres:11.6-alpine
+    environment:
+      - POSTGRES_PASSWORD=ZAQ!2wsx
+      - POSTGRES_USER=luwu
+    command: -c config_file=/etc/postgresql/postgresql.conf
+    container_name: luwu_pg
+    ports:
+      - 127.0.0.1:13002:5432
+
+  frontend-base:
+    image: luwu-frontend-base:${TAG:-latest}
+    build:
+      context: ..
+      dockerfile: dockerfiles/frontend.base.Dockerfile
+
+  frontend:
+    image: luwu-frontend:${TAG:-latest}
+    build:
+      context: ..
+      dockerfile: dockerfiles/frontend.Dockerfile
+    depends_on:
+     - frontend-base
+    ports:
+      - 13003:80
+
+  backend-base:
+    image: luwu-backend-base:${TAG:-latest}
+    build:
+      context: ..
+      dockerfile: dockerfiles/backend.base.Dockerfile
+  
+  terraform:
+    image: luwu-terraform:${TAG:-latest}
+    env_file:
+      - ../conf/backend/env.docker
+    volumes:
+      - ../data/task-data:/opt/logs/luwu
+    build:
+      context: ..
+      dockerfile: dockerfiles/terraform.Dockerfile
+    depends_on:
+     - backend-base
+
+  backend:
+    image: luwu-backend:${TAG:-latest}
+    build:
+      context: ..
+      dockerfile: dockerfiles/backend.Dockerfile
+    env_file:
+      - ../conf/backend/env.docker
+    depends_on:
+     - backend-base
+    ports:
+      - 127.0.0.1:13004:3030

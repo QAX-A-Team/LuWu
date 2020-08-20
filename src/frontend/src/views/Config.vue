@@ -34,13 +34,16 @@
                                                     <ValidationProvider name="提供商" :rules="validateRules.ispType" v-slot="{ errors }">
                                                         <v-select v-model="ispCreateData.provider" :items="availableIspItems" label="提供商" :error-messages="errors"></v-select>
                                                     </ValidationProvider>
+                                                    <ValidationProvider name="API ID" :rules="validateRules.ispApiId" v-slot="{ errors }" v-if="ispCreateData.provider >2">
+                                                        <v-text-field placeholder="AccessKey ID/SecretId" :error-messages="errors" label="API ID" v-model.trim="ispCreateData.apiId"></v-text-field>
+                                                    </ValidationProvider>
                                                     <ValidationProvider name="API Key" :rules="validateRules.ispApiKey" v-slot="{ errors }">
-                                                        <v-text-field :error-messages="errors" label="API KEY" v-model.trim="ispCreateData.apiKey"></v-text-field>
+                                                        <v-text-field placeholder="API KEY/SecretKey/AccessKey Secret" :error-messages="errors" label="API KEY" v-model.trim="ispCreateData.apiKey"></v-text-field>
                                                     </ValidationProvider>
                                                     <ValidationProvider name="备注" v-slot="{ errors }">
                                                         <v-text-field :error-messages="errors" v-model="ispCreateData.remark" label="备注"></v-text-field>
                                                     </ValidationProvider>
-                                                    <ValidationProvider name="测试用KEY" v-slot="{ errors }">
+                                                    <ValidationProvider name="测试" v-slot="{ errors }">
                                                         <v-checkbox :error-messages="errors" v-model="ispCreateData.isTest" label="属于测试专用KEY（比如Namesilo的sandbox api key）" type="checkbox"></v-checkbox>
                                                     </ValidationProvider>
                                                 </v-form>
@@ -96,6 +99,9 @@
                                             <v-select disabled v-model="ispActionData.provider" :items="availableIspItems" label="提供商" :error-messages="errors"></v-select>
                                         </ValidationProvider>
                                         <v-text-field disabled label="API URL" v-model="ispActionData.ispApiUrl"></v-text-field>
+                                        <ValidationProvider name="API ID" :rules="validateRules.ispApiId" v-slot="{ errors }" v-if="ispActionData.provider >2">
+                                            <v-text-field :error-messages="errors" label="API ID" v-model.trim="ispActionData.apiId"></v-text-field>
+                                        </ValidationProvider>
                                         <ValidationProvider name="API Key" :rules="validateRules.ispApiKey" v-slot="{ errors }">
                                             <v-text-field :error-messages="errors" label="API KEY" v-model.trim="ispActionData.apiKey"></v-text-field>
                                         </ValidationProvider>
@@ -696,10 +702,10 @@ export default class ConfigManage extends Vue {
     }
 
     public get sshPrivateKey() {
-        return this.sshConfig.privateKey ? this.sshConfig.privateKey : null;
+        return this.sshConfig && this.sshConfig.privateKey ? this.sshConfig.privateKey : null;
     }
     public get sshPublicKey() {
-        return this.sshConfig.publicKey ? this.sshConfig.publicKey : null;
+        return this.sshConfig && this.sshConfig.publicKey ? this.sshConfig.publicKey : null;
     }
     public async getSshKeyConfig() {
         const sshKeyConfig = await dispatchGetSshConfig(this.$store);

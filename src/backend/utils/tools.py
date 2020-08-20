@@ -1,41 +1,10 @@
 import base64
 import hashlib
 import re
-from datetime import datetime
-from datetime import timedelta
 from io import StringIO
 from ipaddress import ip_address
-from typing import Optional
 
-import jwt
 import paramiko
-from jwt.exceptions import InvalidTokenError
-
-from app.core import config
-
-password_reset_jwt_subject = "preset"
-
-
-def generate_password_reset_token(email):
-    delta = timedelta(hours=config.EMAIL_RESET_TOKEN_EXPIRE_HOURS)
-    now = datetime.utcnow()
-    expires = now + delta
-    exp = expires.timestamp()
-    encoded_jwt = jwt.encode(
-        {"exp": exp, "nbf": now, "sub": password_reset_jwt_subject, "email": email},
-        config.SECRET_KEY,
-        algorithm="HS256",
-    )
-    return encoded_jwt
-
-
-def verify_password_reset_token(token) -> Optional[str]:
-    try:
-        decoded_token = jwt.decode(token, config.SECRET_KEY, algorithms=["HS256"])
-        assert decoded_token["sub"] == password_reset_jwt_subject
-        return decoded_token["email"]
-    except InvalidTokenError:
-        return None
 
 
 def ssh_exec_command(private_key_str: str, ip: str, command: str):
@@ -44,7 +13,7 @@ def ssh_exec_command(private_key_str: str, ip: str, command: str):
 
     private_key_io = StringIO(private_key_str)
     pkey = paramiko.RSAKey.from_private_key(private_key_io)
-    client.connect(hostname=ip, port=22, username='root', pkey=pkey)
+    client.connect(hostname=ip, port=22, username="root", pkey=pkey)
     stdin, stdout, stderr = client.exec_command(command)
     result = stdout.read()
     client.close()
@@ -118,6 +87,6 @@ def get_printable_size(byte_size):
 
 
 def gen_ssh_key_fingerprint(line):
-    key = base64.b64decode(line.strip().split()[1].encode('ascii'))
+    key = base64.b64decode(line.strip().split()[1].encode("ascii"))
     fp_plain = hashlib.md5(key).hexdigest()
-    return ':'.join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))
+    return ":".join(a + b for a, b in zip(fp_plain[::2], fp_plain[1::2]))

@@ -66,21 +66,21 @@
                                                 </v-row>
                                                 <v-row>
                                                     <v-col cols="2">
-                                                        <v-subheader>系统</v-subheader>
-                                                    </v-col>
-                                                    <v-col cols="8">
-                                                        <ValidationProvider name="系统选择" :rules="validateRules.requiredData" v-slot="{ errors }">
-                                                            <v-select dense :items="availableVpsOsItems" :error-messages="errors" v-model="vpsCreateData.osCode" outlined></v-select>
-                                                        </ValidationProvider>
-                                                    </v-col>
-                                                </v-row>
-                                                <v-row>
-                                                    <v-col cols="2">
                                                         <v-subheader>配置</v-subheader>
                                                     </v-col>
                                                     <v-col cols="8">
                                                         <ValidationProvider name="配置选择" :rules="validateRules.requiredData" v-slot="{ errors }">
                                                             <v-select dense :items="availableVpsPlanItems" :error-messages="errors" v-model="vpsCreateData.planCode" outlined></v-select>
+                                                        </ValidationProvider>
+                                                    </v-col>
+                                                </v-row>
+                                                <v-row>
+                                                    <v-col cols="2">
+                                                        <v-subheader>系统</v-subheader>
+                                                    </v-col>
+                                                    <v-col cols="8">
+                                                        <ValidationProvider name="系统选择" :rules="validateRules.requiredData" v-slot="{ errors }">
+                                                            <v-select dense :items="availableVpsOsItems" :error-messages="errors" v-model="vpsCreateData.osCode" outlined></v-select>
                                                         </ValidationProvider>
                                                     </v-col>
                                                 </v-row>
@@ -334,13 +334,21 @@ export default class DomainManage extends Vue {
         const osData = this.vpsRawSpecData.os;
 
         const availableOs = osData.filter((os) => {
-            let available = false;
+            let regionAvailable = false;
+            let planAvailable = false;
             if (os.regionCodes.length === 0) {
-                available = true;
+                regionAvailable = true;
             } else {
-                available = os.regionCodes.includes(this.vpsCreateData.regionCode);
+                regionAvailable = os.regionCodes.includes(this.vpsCreateData.regionCode);
             }
-            return available;
+
+            if (os.planCodes.length > 0 && this.vpsCreateData.planCode) {
+                planAvailable = os.planCodes.includes(this.vpsCreateData.planCode);
+            } else {
+                planAvailable = true;
+            }
+
+            return regionAvailable && planAvailable;
         }).map((os) => {
             return {
                 text: os.name,
@@ -367,6 +375,27 @@ export default class DomainManage extends Vue {
                 },
             );
             return plan.regionCodes.length === 0 ? 1 : planAvailableInRegion;
+        }).filter((plan) => {
+            let regionCodeCheck: boolean;
+
+            if (this.vpsCreateData.regionCode && regionData) {
+                const planAvailableInRegion = regionData.filter((region) => {
+                    if (region.planCodes.length > 0) {
+                        return region.planCodes.some(
+                            (planCode) => {
+                                return planCode.toString() === plan.planCode.toString();
+                            });
+                    } else {
+                        return true;
+                    }
+                });
+                regionCodeCheck = planAvailableInRegion.length > 0;
+            } else {
+                regionCodeCheck = true;
+            }
+
+            return regionCodeCheck;
+
         }).map((plan) => {
             return {
                 text: plan.name,
@@ -452,7 +481,7 @@ export default class DomainManage extends Vue {
             this.vpsSshKeyItems = vpsSshKeyData.map((sshKey) => {
                 return {
                     text: sshKey.name,
-                    value: sshKey.sshKeyId,
+                    value: sshKey.sshKeyId || sshKey.name,
                 };
             });
         }

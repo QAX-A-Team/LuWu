@@ -27,59 +27,15 @@ docker 安装请参考[官方文档](https://docs.docker.com/engine/install/)
 
 #### 系统组件
 
-(在Makefile所在目录下运行)
-```bash
-# 准备redis镜像
-docker pull redis:5.0.7-buster
-# 运行redis
-make docker-redis-run
-
-# 准备pgsql镜像
-docker pull postgres:11.6-alpine
-# 运行pgsql
-make docker-pg-run
-
-# 前端基础库构建
-make base-frontend-build
-# 构建前端工程
-make docker-frontend-build
-# 运行前端系统
-make docker-frontend-run
-
-# 后端基础库构建
-make base-backend-build
-# 构建后端工程
-make docker-backend-build
-# 运行后端系统
-make docker-backend-run
-
-# 构建任务工程
-make docker-terraform-build
-# 运行任务系统
-make docker-terraform-run
-```
-
-具体安装配置请参考 **Makefile** 相关命令:
-
-```bash
-Makefile rules:
-
-    help:                                         Show Makefile rules.
-    docker-terraform-build:                       Build terraform image.
-    docker-terraform-run:                         Run terraform container.
-    base-backend-build:                           Build base backend docker image.
-    base-frontend-build:                          Build base frontend docker image.
-    docker-backend-build:                         Build backend docker image.
-    docker-backend-run:                           Run backend docker container.
-    docker-frontend-build:                        Build frontend docker image.
-    docker-frontend-run:                          Run frontend docker container.
-    docker-pg-run:                                Run postgresql docker container.
-    docker-redis-run:                             Run redis docker container.
-```
+- redis
+- postgresql
+- frontend
+- backend
 
 ## 配置
 
 ### 系统配置
+
 系统的主要配置都在conf目录下, 安装、使用的时候请注意配置是否正确
 
 ```
@@ -100,31 +56,31 @@ conf
 ```
 
 #### 环境变量配置
+
 请注意**conf/backend**的**env.default**是示例文件，使用的时候请放在src/backend目录下， 比如：
+
 ```bash
 cp conf/backend/env.default src/backend/.env
 ```
+
 根据具体情况，可能需要对配置`src/backend/.env`进行更改
 
 同理，完成对前端项目的环境配置
+
 ```bash
 cp conf/frontend/env.default  src/frontend/.env
 ```
 
-
-
 ### 初始化系统
 
 请参考[alembic官方文档](https://alembic.sqlalchemy.org/en/latest/tutorial.html)
-```bash
-# 初始化
-alembic init && alembic revision -m 'init'
 
-# 生成目前的model记录 && 升级到最新记录
-alembic revision --autogenerate && alembic upgrade head
+```bash
+# 升级到最新记录 && 生成目前的model记录 && 升级到最新记录
+alembic upgrade head && alembic revision --autogenerate && alembic upgrade head
 
 # 写入用户数据(在src/backend目录下运行)
-PYTHONPATH=. python app/initial_data.py 
+python initial_data.py
 ```
 
 ### 使用配置
@@ -137,8 +93,8 @@ PYTHONPATH=. python app/initial_data.py
 - SSH KEY， 这里的SSH KEY会被写入到被创建的VPS，所以也可以通过页面提供的私钥直接连接目标VPS
 - 网站模板， 目前是NGINX反代静态网站的模式，所以需要上传**zip**压缩打包后的静态网站文件
 
-
 ## 引用的开源项目
+
 * https://github.com/mail-in-a-box/mailinabox
 * https://github.com/bluscreenofjeff/Malleable-C2-Randomizer
 * https://github.com/bluscreenofjeff/Red-Team-Infrastructure-Wiki

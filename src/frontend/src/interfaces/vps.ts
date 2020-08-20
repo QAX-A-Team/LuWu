@@ -3,7 +3,7 @@ import { IPaginationData, IPaginationDataItem } from '@/interfaces/index';
 export interface IVpsPaginationItemData extends IPaginationDataItem {
     ispId: number;
     ip: number | string;
-    serverId: number;
+    serverId: number| string;
     hostname: string;
     os: string;
     plan: string;
@@ -35,6 +35,7 @@ export interface IVpsSpecOs {
     name: string;
     osCode: string | number;
     regionCodes: Array<string | number>;
+    planCodes: Array<string | number>;
 }
 
 export interface IVpsSpecRegion {
@@ -42,6 +43,7 @@ export interface IVpsSpecRegion {
     regionCode: string | number;
     features: string[];
     regionCodes: Array<string | number>;
+    planCodes: string[] | number[];
 }
 
 export interface IVpsSpecPlan {
