@@ -1,5 +1,5 @@
 <template>
-    <v-content>
+    <v-main>
         <v-container fluid fill-height class="loginOverlay">
             <v-layout align-center justify-center>
                 <v-flex xs12 sm8 md4>
@@ -27,7 +27,7 @@
                 </v-flex>
             </v-layout>
         </v-container>
-    </v-content>
+    </v-main>
 </template>
 
 <script lang="ts">
@@ -55,7 +55,7 @@ export default class Login extends Vue {
 
 <style>
 .loginOverlay {
-    background-image: url("https://images.unsplash.com/photo-1488866022504-f2584929ca5f?dpr=1&auto=compress,format&fit=crop&w=1650&h=&q=80&cs=tinysrgb&crop=");
+    background-image: url('~@/assets/login.jpeg');
     background-repeat:no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;

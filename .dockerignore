@@ -44,7 +44,6 @@
 # project 
 **/data
 **/migrations
-**/alembic
 **/.terraform
 **/.git
 **/.DS_Store

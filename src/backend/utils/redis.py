@@ -3,11 +3,11 @@ import json
 import redis
 from sqlalchemy.orm import Session
 
-from app.core.config import CELERY_TASK_EXPIRE
-from app.core.config import PROJECT_NAME
-from app.core.config import REDIS
-from app.crud.crud_config import crud_isp
-from app.crud.crud_vps import crud_vps
+from core.config import CELERY_TASK_EXPIRE
+from core.config import PROJECT_NAME
+from core.config import REDIS
+from crud.crud_config import crud_isp
+from crud.crud_vps import crud_vps
 
 
 class RedisPool:

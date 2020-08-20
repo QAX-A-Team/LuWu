@@ -33,7 +33,6 @@ module.exports = {
             }));
     },
     devServer: {
-        host: 'localhost',
-        proxy: `http://${process.env.VUE_APP_DOMAIN_DEV}`
+        proxy: 'http://localhost:8000',
     }
 }

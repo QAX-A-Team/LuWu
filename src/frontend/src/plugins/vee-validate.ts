@@ -20,6 +20,7 @@ for (const [rule, validation] of Object.entries(rules)) {
 export const validateRules = {
     ispApiKey: 'required',
     ispType: 'required',
+    ispApiId: 'required',
     c2ProfileName: 'required|alpha_dash',
     c2ProfileFile: 'required|ext:profile',
     domain: { required: true, regex: /^[A-Za-z0-9][A-Za-z0-9_.]*$/ },

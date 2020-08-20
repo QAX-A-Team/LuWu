@@ -1,4 +1,4 @@
-FROM python:3.8-alpine3.10 as builder
+FROM python:3.8-alpine3.12 as builder
 
 ARG ENV=dev
 ARG PROJ=luwu
