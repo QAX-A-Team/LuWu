@@ -11,7 +11,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "core-js": "^3.6.5",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "regenerator-runtime": "^0.13.5",
     "typesafe-vuex": "^3.2.2",
     "vee-validate": "^3.3.9",
